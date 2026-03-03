@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card p-4">
+<h4>Patient Symptom Assessment</h4>
+<form method="POST" action="/patient_predict">
+<input name="age" class="form-control mb-2" placeholder="Age" required>
+<input name="height" class="form-control mb-2" placeholder="Height (cm)" required>
+<input name="weight" class="form-control mb-2" placeholder="Weight (kg)" required>
+
+<select name="heavy_bleeding" class="form-select mb-2">
+<option value="1">Heavy Bleeding - Yes</option>
+<option value="0">Heavy Bleeding - No</option>
+</select>
+
+<select name="irregular_periods" class="form-select mb-2">
+<option value="1">Irregular Periods - Yes</option>
+<option value="0">Irregular Periods - No</option>
+</select>
+
+<select name="pelvic_pain" class="form-select mb-2">
+<option value="1">Pelvic Pain - Yes</option>
+<option value="0">Pelvic Pain - No</option>
+</select>
+
+<select name="hormonal_symptoms" class="form-select mb-3">
+<option value="1">Hormonal Symptoms - Yes</option>
+<option value="0">Hormonal Symptoms - No</option>
+</select>
+
+<select name="pain_during_intercourse" class="form-select mb-2">
+<option value="1">Pain During Intercourse - Yes</option>
+<option value="0">Pain During Intercourse - No</option>
+</select>
+
+<select name="family_history" class="form-select mb-2">
+<option value="1">Family History - Yes</option>
+<option value="0">Family History - No</option>
+</select>
+
+<button class="btn btn-primary w-100">Predict Risk</button>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card p-4">
+<h3>Patient Clinical Report</h3>
+
+<hr>
+
+<p><strong>Patient Name:</strong> {{record[1]}}</p>
+<p><strong>Age:</strong> {{record[2]}}</p>
+<p><strong>Height:</strong> {{record[3]}} cm</p>
+<p><strong>Weight:</strong> {{record[4]}} kg</p>
+<p><strong>BMI:</strong> {{record[5]}}</p>
+
+<hr>
+<h4>Clinical Interpretation</h4>
+
+{% if record[13] == "High Risk" %}
+<p style="color:red;">
+⚠ High probability of endometriosis.
+Recommend gynecologist consultation and MRI confirmation.
+</p>
+{% elif record[13] == "Moderate Risk" %}
+<p style="color:orange;">
+Moderate risk detected.
+Suggest further ultrasound evaluation.
+</p>
+{% else %}
+<p style="color:green;">
+Low risk detected.
+Monitor symptoms and follow-up after 3 months.
+</p>
+{% endif %}
+
+<h5>Symptoms Analysis</h5>
+<ul>
+<li>Heavy Bleeding: {{record[6]}}</li>
+<li>Irregular Periods: {{record[7]}}</li>
+<li>Pelvic Pain: {{record[8]}}</li>
+<li>Hormonal Symptoms: {{record[9]}}</li>
+</ul>
+
+<hr>
+
+<h5>AI Prediction Results</h5>
+<p>ML Score: {{ (record[10]*100) | round(2) if record[10] else "N/A" }} %</p>
+<p>CNN Score: {{ (record[11]*100) | round(2) if record[11] else "N/A" }} %</p>
+<p>Final Risk: <strong>{{record[13]}}</strong></p>
+
+<hr>
+
+<h5>Upload Ultrasound Image</h5>
+<form method="POST" action="/doctor_upload/{{record[0]}}" enctype="multipart/form-data">
+<input type="file" name="image" required>
+<button class="btn btn-success mt-2">Analyze Image</button>
+</form>
+
+<br>
+
+{% if record[14] %}
+<h5>Uploaded Ultrasound</h5>
+<img src="/{{record[14]}}" width="400">
+{% endif %}
+
+<a href="/doctor" class="btn btn-secondary mt-3">Back</a>
+
+</div>
+
+{% endblock %}

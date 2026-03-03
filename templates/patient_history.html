@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card p-4">
+<h3>Your Medical History</h3>
+
+<table class="table">
+<tr>
+<th>Date ID</th>
+<th>Risk</th>
+<th>Final Score</th>
+</tr>
+
+{% for d in data %}
+<tr>
+<td>{{d[0]}}</td>
+<td>{{d[13]}}</td>
+<td>{{d[12]}}</td>
+</tr>
+{% endfor %}
+</table>
+
+<a href="/patient">Back</a>
+</div>
+{% endblock %}

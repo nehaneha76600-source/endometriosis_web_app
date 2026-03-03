@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card p-4 mx-auto shadow" style="max-width:450px;">
+<h4 class="text-center mb-4">Create Account</h4>
+
+<form method="POST">
+
+    <!-- Username -->
+    <input name="username" class="form-control mb-3" placeholder="Username" required>
+
+    <!-- Email -->
+    <input name="email" type="email" class="form-control mb-3" placeholder="Email Address" required>
+
+    <!-- Password -->
+    <input name="password" type="password" class="form-control mb-3" placeholder="Password" required>
+
+    <!-- Role Selection -->
+    <select name="role" id="roleSelect" class="form-select mb-3" required>
+        <option value="">Select Role</option>
+        <option value="patient">Patient</option>
+        <option value="doctor">Doctor</option>
+    </select>
+
+    <!-- Doctor Secret Code (Hidden by default) -->
+    <div id="secretField" style="display:none;">
+        <input name="secret_code" type="text" class="form-control mb-3"
+               placeholder="Enter Doctor Secret Code">
+    </div>
+
+    <button class="btn btn-success w-100">Register</button>
+
+</form>
+</div>
+
+<script>
+document.getElementById("roleSelect").addEventListener("change", function() {
+    var secretField = document.getElementById("secretField");
+    if (this.value === "doctor") {
+        secretField.style.display = "block";
+    } else {
+        secretField.style.display = "none";
+    }
+});
+</script>
+
+{% endblock %}

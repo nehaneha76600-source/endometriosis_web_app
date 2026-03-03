@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-center mb-4">Admin Analytics Dashboard</h2>
+
+<!-- ================= DASHBOARD CARDS ================= -->
+<div class="row text-center mb-5">
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h3>120</h3>
+            <p>Total Patients</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h3>35</h3>
+            <p>High Risk Cases</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h3>70%</h3>
+            <p>Moderate Risk</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h3>94%</h3>
+            <p>Model Accuracy</p>
+        </div>
+    </div>
+</div>
+
+<!-- ================= PENDING DOCTOR APPROVALS ================= -->
+<div class="glass-box p-4">
+    <h3 class="mb-4">Pending Doctor Approvals</h3>
+
+    {% if doctors %}
+        <table class="table table-bordered">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Specialization</th>
+                <th>Action</th>
+            </tr>
+
+            {% for doctor in doctors %}
+            <tr>
+                <td>{{ doctor[1] }}</td>
+                <td>{{ doctor[2] }}</td>
+                <td>{{ doctor[4] }}</td>
+                <td>
+                    <a href="/approve_doctor/{{ doctor[0] }}" 
+                       class="btn btn-success btn-sm">
+                       Approve
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        <p>No pending doctor approvals.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

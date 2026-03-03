@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HERO SECTION -->
+<div class="row align-items-center mb-5">
+    <div class="col-md-6">
+        <h1 class="fw-bold text-primary">
+            AI Powered Early Detection of Endometriosis
+        </h1>
+        <p class="lead mt-3">
+            Our intelligent medical system combines Machine Learning and Deep Learning 
+            models to assist in early detection and risk analysis of Endometriosis 
+            in women using clinical symptoms and medical imaging.
+        </p>
+
+        {% if not session.get('role') %}
+        <a href="/register" class="btn btn-success btn-lg me-3">Get Started</a>
+        <a href="/login" class="btn btn-outline-primary btn-lg">Login</a>
+        {% endif %}
+    </div>
+
+    <div class="col-md-6 text-center">
+        <img src="https://img.freepik.com/free-photo/doctor-using-digital-tablet_23-2148827774.jpg"
+             class="img-fluid rounded shadow"
+             alt="Medical AI">
+    </div>
+</div>
+
+<!-- STATISTICS SECTION -->
+<div class="row text-center mt-5">
+
+    <div class="col-md-4">
+        <h2 class="counter" data-target="10">0</h2>
+        <p>Women Affected (%)</p>
+    </div>
+
+    <div class="col-md-4">
+        <h2 class="counter" data-target="7">0</h2>
+        <p>Avg Diagnosis Delay (Years)</p>
+    </div>
+
+    <div class="col-md-4">
+        <h2 class="counter" data-target="94">0</h2>
+        <p>Hybrid Model Accuracy (%)</p>
+    </div>
+
+</div>
+
+<!-- ABOUT SECTION -->
+<div class="row text-center mb-5">
+    <h2 class="text-danger mb-4">About Endometriosis</h2>
+    <p class="col-md-10 mx-auto">
+        Endometriosis is a chronic gynecological condition where tissue similar 
+        to the lining of the uterus grows outside the uterus. It can cause severe 
+        pelvic pain, irregular menstrual cycles, infertility, and hormonal imbalance.
+        Early detection significantly improves treatment outcomes and quality of life.
+    </p>
+</div>
+
+<!-- FEATURES SECTION -->
+<div class="row text-center mt-5">
+
+    <div class="col-md-4 mb-4" data-aos="fade-up">
+        <div class="feature-card p-4 h-100" onclick="showSection('ml')">
+            <img src="https://img.icons8.com/color/96/medical-doctor.png"
+                 class="mb-3" width="70">
+            <h5 class="fw-bold">Symptom Based ML</h5>
+            <p>Clinical data based prediction system.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card p-4 h-100" onclick="showSection('cnn')">
+            <img src="https://img.icons8.com/color/96/artificial-intelligence.png"
+                 class="mb-3" width="70">
+            <h5 class="fw-bold">CNN Image Analysis</h5>
+            <p>Ultrasound & MRI deep learning analysis.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="feature-card p-4 h-100" onclick="showSection('combined')">
+            <img src="https://img.icons8.com/color/96/combo-chart.png"
+                 class="mb-3" width="70">
+            <h5 class="fw-bold">Hybrid Risk Model</h5>
+            <p>Integrated ML + CNN risk scoring.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- DYNAMIC CONTENT AREA -->
+<div id="dynamic-content" class="mt-5"></div>
+
+<div class="container mt-5 glass-box">
+    <h2 class="text-center">Contact Us</h2>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <input class="form-control mb-3" placeholder="Full Name">
+            <input class="form-control mb-3" placeholder="Email Address">
+            <textarea class="form-control mb-3" rows="4" placeholder="Your Message"></textarea>
+            <button class="btn btn-primary">Send Message</button>
+        </div>
+        <div class="col-md-6">
+            <h5>AI Healthcare Research Lab</h5>
+            <p>Email: support@aihealthlab.com</p>
+            <p>Phone: +91 XXXXX XXXXX</p>
+            <p>Location: India</p>
+        </div>
+    </div>
+</div>
+
+<div class="glass-box mt-5">
+    <h2 class="text-center mb-4">System Reports</h2>
+    <ul>
+        <li>✔ Monthly Risk Analysis Report</li>
+        <li>✔ Doctor Performance Analytics</li>
+        <li>✔ AI Model Accuracy Tracking</li>
+        <li>✔ Patient History Monitoring</li>
+        <li>✔ Real-time Risk Distribution</li>
+    </ul>
+</div>
+
+<!-- FOOTER INFO -->
+<div class="text-center mt-5">
+    <hr>
+    <p class="text-muted">
+        Developed for academic medical research | AI Assisted Healthcare Platform
+    </p>
+</div>
+
+<script>
+
+/* =======================
+   STATISTICS COUNTER
+======================= */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const counters = document.querySelectorAll('.counter');
+
+    counters.forEach(counter => {
+        counter.innerText = '0';
+
+        const updateCounter = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const increment = target / 100;
+
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(updateCounter, 20);
+            } else {
+                counter.innerText = target;
+            }
+        };
+
+        updateCounter();
+    });
+
+});
+
+
+/* =======================
+   DYNAMIC CONTENT
+======================= */
+
+function showSection(type) {
+
+    let content = "";
+
+    if(type === "ml"){
+        content = `
+        <div class="glass-box text-center">
+            <h2>Symptom Based ML Models</h2>
+            <p>Comparison of traditional ML classifiers.</p>
+
+            <div style="max-width:500px; margin:auto;">
+                <canvas id="mlChart"></canvas>
+            </div>
+        </div>`;
+    }
+
+    if(type === "cnn"){
+        content = `
+        <div class="glass-box text-center">
+            <h2>CNN Medical Image Analysis</h2>
+            <p>Deep learning accuracy comparison.</p>
+
+            <div style="max-width:500px; margin:auto;">
+                <canvas id="cnnChart"></canvas>
+            </div>
+        </div>`;
+    }
+
+    if(type === "combined"){
+        content = `
+        <div class="glass-box text-center">
+            <h2>Hybrid Risk Distribution</h2>
+            <p>Final integrated risk classification.</p>
+
+            <div style="max-width:400px; margin:auto;">
+                <canvas id="combinedChart"></canvas>
+            </div>
+        </div>`;
+    }
+
+    document.getElementById("dynamic-content").innerHTML = content;
+
+    setTimeout(loadCharts, 200);
+}
+
+
+/* =======================
+   LOAD CHARTS
+======================= */
+function loadCharts(){
+
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: {
+                    color: "#ffffff"
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: { color: "#ffffff" }
+            },
+            y: {
+                ticks: { color: "#ffffff" }
+            }
+        }
+    };
+
+    if(document.getElementById("mlChart")){
+        new Chart(document.getElementById("mlChart"), {
+            type: 'bar',
+            data: {
+                labels: ['Logistic', 'Random Forest', 'SVM'],
+                datasets: [{
+                    label: 'Accuracy %',
+                    data: [82, 89, 85],
+                    backgroundColor: ['#0d6efd','#20c997','#ffc107']
+                }]
+            },
+            options: commonOptions
+        });
+    }
+
+    if(document.getElementById("cnnChart")){
+        new Chart(document.getElementById("cnnChart"), {
+            type: 'bar',
+            data: {
+                labels: ['Basic CNN', 'ResNet50'],
+                datasets: [{
+                    label: 'Accuracy %',
+                    data: [88, 93],
+                    backgroundColor: ['#6610f2','#dc3545']
+                }]
+            },
+            options: commonOptions
+        });
+    }
+
+    if(document.getElementById("combinedChart")){
+        new Chart(document.getElementById("combinedChart"), {
+            type: 'doughnut',
+            data: {
+                labels: ['Low', 'Moderate', 'High'],
+                datasets: [{
+                    data: [30, 45, 25],
+                    backgroundColor: ['#198754','#ffc107','#dc3545']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: "#ffffff" }
+                    }
+                }
+            }
+        });
+    }
+}
+
+</script>
+{% endblock %}

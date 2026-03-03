@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card p-4">
+<h3>Doctor Clinical Dashboard</h3>
+
+<table class="table table-bordered table-hover">
+<thead>
+<tr>
+<th>ID</th>
+<th>Patient</th>
+<th>Age</th>
+<th>BMI</th>
+<th>ML Score (%)</th>
+<th>Final Risk</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+{% for row in data %}
+<tr>
+<td>{{row[0]}}</td>
+<td>{{row[1]}}</td>
+<td>{{row[2]}}</td>
+<td>{{row[5]}}</td>
+<td>{{ (row[10] * 100) | round(2) if row[10] else "N/A" }}</td>
+<td>
+<span class="
+{% if row[13] == 'High Risk' %}
+text-danger fw-bold
+{% elif row[13] == 'Moderate Risk' %}
+text-warning fw-bold
+{% else %}
+text-success fw-bold
+{% endif %}
+">
+{{row[13]}}
+</span>
+</td>
+
+<td>
+<a href="/doctor_view/{{row[0]}}" class="btn btn-primary btn-sm">
+View Details
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% if not data %}
+<p class="text-muted">No patient records available yet.</p>
+{% endif %}
+
+<a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+</div>
+<div class="container mt-5">
+    <div class="glass-box">
+        <h2>Patient Records</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Risk Level</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>Anitha</td>
+                <td>28</td>
+                <td>Moderate</td>
+                <td><button class="btn btn-primary btn-sm">View</button></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

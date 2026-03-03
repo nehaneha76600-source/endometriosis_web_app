@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card p-4 text-center">
+<h4>Prediction Result</h4>
+<p>ML Risk: {{ml}}%</p>
+
+{% if cnn %}
+<p>CNN Risk: {{cnn}}%</p>
+{% endif %}
+
+<h3>Final Risk: {{final}}%</h3>
+<h4>Status: {{risk}}</h4>
+
+{% if risk == "High Risk" %}
+<p class="text-danger">Consult a Gynecologist Immediately.</p>
+{% endif %}
+
+<a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+</div>
+{% endblock %}
