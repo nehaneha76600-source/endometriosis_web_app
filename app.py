@@ -8,12 +8,22 @@ from tensorflow.keras.models import load_model
 from werkzeug.security import generate_password_hash, check_password_hash
 import gdown
 
-MODEL_PATH = "models/cnn_model.keras"
+os.makedirs("models", exist_ok=True)
 
-if not os.path.exists(MODEL_PATH):
-    os.makedirs("models", exist_ok=True)
-    url = "https://drive.google.com/uc?id=11-xIcteY6qN00AqXPlAh9biskZBqAfS0"
-    gdown.download(url, MODEL_PATH, quiet=False)
+# CNN MODEL
+if not os.path.exists("models/cnn_model.keras"):
+    gdown.download("https://drive.google.com/uc?id=11-xIcteY6qN00AqXPlAh9biskZBqAfS0",
+                   "models/cnn_model.keras", quiet=False)
+
+# ML MODEL
+if not os.path.exists("models/ml_model.pkl"):
+    gdown.download("https://drive.google.com/uc?id=1_Ei9USc2XhGLL-Ua1EbnuUJJWTHUtq8o",
+                   "models/ml_model.pkl", quiet=False)
+
+# SCALER
+if not os.path.exists("models/scaler.pkl"):
+    gdown.download("https://drive.google.com/uc?id=1C4M2wXtDm1CPBDf5nr0CiOp83Rhf6jP5",
+                   "models/scaler.pkl", quiet=False)
 
 DOCTOR_SECRET_CODE = "ENDO2026"
 
