@@ -1,11 +1,10 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for 
 import sqlite3
 import numpy as np
 from tensorflow.keras.preprocessing import image
 import os
 import joblib
 from tensorflow.keras.models import load_model
-from PIL import Image
 from werkzeug.security import generate_password_hash, check_password_hash
 import gdown
 
@@ -128,7 +127,7 @@ def register():
         conn.commit()
         conn.close()
 
-        return redirect("/login")
+        return redirect(url_for("login"))
 
     return render_template("register.html")
 # ---------------- LOGIN ----------------
@@ -189,17 +188,17 @@ def patient():
 @app.route("/patient_predict", methods=["POST"])
 def patient_predict():
 
-    age = float(request.form["age"])
-    height = float(request.form["height"])
-    weight = float(request.form["weight"])
+    age = float(request.form.get("age", 0))
+    height = float(request.form.get("height", 0))
+    weight = float(request.form.get("weight", 0))
     bmi = weight / ((height/100)**2)
 
-    heavy = int(request.form["heavy_bleeding"])
-    irregular = int(request.form["irregular_periods"])
-    pelvic = int(request.form["pelvic_pain"])
-    hormonal = int(request.form["hormonal_symptoms"])
-    pain_intercourse = int(request.form["pain_during_intercourse"])
-    family_history = int(request.form["family_history"])
+    heavy = int(request.form.get("heavy_bleeding", 0))
+    irregular = int(request.form.get("irregular_periods", 0))
+    pelvic = int(request.form.get("pelvic_pain", 0))
+    hormonal = int(request.form.get("hormonal_symptoms", 0))
+    pain_intercourse = int(request.form.get("pain_during_intercourse", 0))
+    family_history = int(request.form.get("family_history", 0))
 
     features = np.array([[age,height,weight,bmi,
                       heavy,irregular,pelvic,hormonal,
@@ -355,5 +354,6 @@ def logout():
 
 
 if __name__ == "__main__":
+    init_db()
     port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)
